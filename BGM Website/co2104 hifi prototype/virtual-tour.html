@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Vendor Tour - Birmingham German Market</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Ensuring the map and icons are correctly displayed */
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: url('images/map.png') no-repeat center center;
+            background-size: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .vendor-icon {
+            position: absolute;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">Birmingham German Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Dates & Times</a></li>
+                <li class="nav-item"><a class="nav-link" href="virtual-tour.html">Virtual Vendor Tour</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="signup.html">Register</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h1 class="text-center">Virtual Vendor Tour</h1>
+        <div class="map-container">
+            <!-- Vendor icons with positions on the map -->
+            <img src="images/icon.png" class="vendor-icon" style="top: 100px; left: 700px;" data-vendor="1" />
+            <img src="images/icon.png" class="vendor-icon" style="top: 200px; left: 300px;" data-vendor="2" />
+            <img src="images/icon.png" class="vendor-icon" style="top: 350px; left: 450px;" data-vendor="3" />
+            <img src="images/icon.png" class="vendor-icon" style="top: 250px; left: 600px;" data-vendor="4" />
+            <img src="images/icon.png" class="vendor-icon" style="top: 400px; left: 750px;" data-vendor="5" />
+        </div>
+    </div>
+
+    <!-- Vendor Modal -->
+    <div class="modal fade" id="vendorModal" tabindex="-1" role="dialog" aria-labelledby="vendorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vendorModalLabel">Vendor Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="vendorInfo">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Vendor data with descriptions and ratings
+        const vendors = {
+            1: {
+                name: 'Vendor 1',
+                description: 'Offering traditional German sausages and pretzels.',
+                products: 'Sausages, Pretzels, Beverages',
+                rating: getRandomRating()
+            },
+            2: {
+                name: 'Vendor 2',
+                description: 'Handcrafted Christmas ornaments and decorations.',
+                products: 'Ornaments, Decorations, Gifts',
+                rating: getRandomRating()
+            },
+            3: {
+                name: 'Vendor 3',
+                description: 'Delicious German chocolates and sweets.',
+                products: 'Chocolates, Sweets, Candy',
+                rating: getRandomRating()
+            },
+            4: {
+                name: 'Vendor 4',
+                description: 'Warm mulled wine and festive drinks.',
+                products: 'Mulled Wine, Hot Chocolate, Beverages',
+                rating: getRandomRating()
+            },
+            5: {
+                name: 'Vendor 5',
+                description: 'Traditional German bread and pastries.',
+                products: 'Bread, Pastries, Baked Goods',
+                rating: getRandomRating()
+            }
+        };
+
+        // Function to generate a random star rating between 1 and 5
+        function getRandomRating() {
+            return (Math.random() * 4 + 1).toFixed(1); // Generates a rating between 1.0 and 5.0
+        }
+
+        // Initialize vendor icon click event to show modal with vendor information
+        $(document).ready(function() {
+            $('.vendor-icon').click(function() {
+                const vendorId = $(this).data('vendor');
+                const vendor = vendors[vendorId];
+                $('#vendorModalLabel').text(vendor.name);
+                $('#vendorInfo').html(`
+                    <p><strong>Description:</strong> ${vendor.description}</p>
+                    <p><strong>Products:</strong> ${vendor.products}</p>
+                    <p><strong>Rating:</strong> ${vendor.rating} ⭐</p>
+                `);
+                $('#vendorModal').modal('show');
+            });
+        });
+    </script>
+</body>
+</html>
